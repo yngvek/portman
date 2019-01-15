@@ -1,2 +1,2 @@
 # portman
-Portfolie manager
+Portfolio manager, writen in rust
