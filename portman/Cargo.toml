@@ -1,0 +1,7 @@
+[package]
+name = "portman"
+version = "0.1.0"
+authors = ["yngvek <yngve@klakegg.org>"]
+edition = "2018"
+
+[dependencies]
