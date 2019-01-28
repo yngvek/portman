@@ -3,24 +3,27 @@
     let default_percentage_bitcoin = 50.0;
     let default_percentage_usd = 50.0;
     //let amount_satoshis: i64 = 285714285; //default
-    let amount_satoshis: i64 = 342854285;
+    let amount_satoshis: i64 = 285714285;
     //let value_usd = 10000.00; //default
-    let value_usd = 10000.00;
+    let value_usd = 10000.0;
     let acceptable_deviation_threshold = 5.0;
-    get_value_of_btc_in_usd(amount_satoshis);
     let number_of_bitcoin = get_satoshis_as_bitcoin(amount_satoshis);
+    println!("--------Portfolio Manager------");
     println!("Number of BTC in portfolio: {}", number_of_bitcoin);
+  
     let bitcoin_price_in_usd = get_price();
     println!("Price of BTC in USD: {}", bitcoin_price_in_usd);
     println!("Value of USD in portfolio: {}", value_usd);
-    println!("Value of BTC in portfolio: {} USD",get_value_of_btc_in_usd(amount_satoshis));
-    println!("Total value of portfolio in USD: {}", value_usd + get_value_of_btc_in_usd(amount_satoshis));
+
     let value_of_btc_in_usd = get_value_of_btc_in_usd(amount_satoshis);
+    println!("Value of BTC in portfolio: {} USD",value_of_btc_in_usd);
+    println!("Total value of portfolio in USD: {}", value_usd + value_of_btc_in_usd);
+    
     println!("Current percentage BTC: {:.1}%", current_percentage_btc(value_of_btc_in_usd, value_usd));
     println!("Current percentage USD: {:.1}%", current_percentage_usd(value_of_btc_in_usd, value_usd));
-    println!("Threshold price to sell bitcoin: {:.1}", calculate_threshold_up_price(number_of_bitcoin, 
+    println!("Threshold ({}%) price to sell bitcoin: > {:.1}", default_percentage_bitcoin+acceptable_deviation_threshold, calculate_threshold_up_price(number_of_bitcoin, 
         value_usd, default_percentage_usd, acceptable_deviation_threshold));
-    println!("Threshold price to buy bitcoin: {:.1}", calculate_threshold_down_price(number_of_bitcoin, 
+    println!("Threshold ({}%) price to buy bitcoin: < {:.1}", default_percentage_bitcoin-acceptable_deviation_threshold, calculate_threshold_down_price(number_of_bitcoin, 
         value_usd, default_percentage_usd, acceptable_deviation_threshold));
     println!("------------------------------");
     println!("Is threshold for selling bitcoin reached?: {}", is_threshold_to_sell_bitcoin_reached(value_of_btc_in_usd, 
@@ -52,10 +55,17 @@ fn get_value_of_btc_in_usd(amount_satoshis: i64) -> f64
 }
 
 fn get_price() -> f64
-{   let price_btc = 3500.00;
+{  
+     //let price_btc = 3500.00;
+     let price_btc = 5000.0;
     price_btc
 }
 
+fn get_price_api() -> f64
+{
+    // implement current BTC price from api
+    3500.00
+}
 fn get_satoshis_as_bitcoin(amount_satoshis: i64) -> f64
 {
     let conversion_rate = 100000000;
